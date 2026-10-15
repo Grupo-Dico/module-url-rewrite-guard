@@ -1,0 +1,21 @@
+{
+  "name": "grupo-dico/module-url-rewrite-guard",
+  "description": "Magento 2 store-scoped URL rewrite collision guard for category saves and CSV imports",
+  "type": "magento2-module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.4 <8.6",
+    "magento/framework": "*",
+    "magento/module-catalog-url-rewrite": "*",
+    "magento/module-catalog-import-export": "*",
+    "magento/module-import-export": "*"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "GDMexico\\UrlRewriteGuard\\": ""
+    }
+  }
+}
