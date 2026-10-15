@@ -1,5 +1,6 @@
 {
   "name": "grupo-dico/module-url-rewrite-guard",
+  "version": "1.0.0",
   "description": "Magento 2 store-scoped URL rewrite collision guard for category saves and CSV imports",
   "type": "magento2-module",
   "license": "proprietary",

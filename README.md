@@ -30,3 +30,42 @@ PHP language target is 7.4–8.5; Magento itself limits which PHP releases can b
 
 ## Release
 Source assembled from tested local v0.8 and the Store ID suffix patch. This package is a release candidate pending complete Magento version matrix testing.
+
+## Versionado y publicación (SemVer)
+
+El proyecto usa **Semantic Versioning**: `MAJOR.MINOR.PATCH`. Los consumidores Composer obtienen su versión de **tags Git**, no del campo `version` en `composer.json` (deliberadamente omitido). El archivo `VERSION` y el atributo `setup_version` en `etc/module.xml` documentan la versión del módulo y deben mantenerse sincronizados con la etiqueta publicada. `setup_version` es metadato legado de Magento, no sustituye el tag Composer ni ejecuta cambios de esquema de forma automática.
+
+- `PATCH` (`1.0.1`): correcciones compatibles de errores.
+- `MINOR` (`0.10.0`): funcionalidad compatible nueva.
+- `MAJOR` (`1.0.0`): versión estable tras validación y/o cambios incompatibles.
+
+### Primer release de pruebas
+
+```bash
+git add .
+git commit -m "chore: prepare 1.0.0 Magento module release"
+git tag -a v1.0.0 -m "1.0.0 initial internal release"
+git push origin main
+git push origin v1.0.0
+```
+
+Para actualizar a una versión posterior, primero modifica `VERSION`, `setup_version` y `CHANGELOG.md`, verifica PHP/Magento, crea el commit y después el tag. **No muevas ni reutilices tags publicados**.
+
+Configura este repositorio VCS en un Magento consumidor (o en el gestor de paquetes privado de la organización):
+
+```bash
+composer config repositories.url-rewrite-guard vcs git@github.com:Grupo-Dico/module-url-rewrite-guard.git
+composer require grupo-dico/module-url-rewrite-guard:^1.0
+php bin/magento module:enable GDMexico_UrlRewriteGuard
+php bin/magento setup:upgrade
+```
+
+Para actualización controlada después de publicar `v1.0.1`:
+
+```bash
+composer update grupo-dico/module-url-rewrite-guard --with-dependencies
+php bin/magento setup:upgrade
+php bin/magento cache:clean
+```
+
+Para fijar una versión exacta en ambiente sensible usa `composer require grupo-dico/module-url-rewrite-guard:1.0.0` y despliega `composer.lock`. No uses `dev-main` en producción.
